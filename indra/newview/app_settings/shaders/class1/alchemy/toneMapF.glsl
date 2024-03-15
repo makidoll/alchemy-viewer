@@ -114,25 +114,50 @@ vec3 uchimura(vec3 x)
 //--------------------------------------------------------------------------------------
 
 // Hable, http://filmicworlds.com/blog/filmic-tonemapping-operators/
+// https://github.com/Zackin5/Filmic-Tonemapping-ReShade/blob/master/Uncharted2.fx
+
 uniform vec3 tone_uncharted_a = vec3(0.22, 0.30, 0.10); // A, B, C
-uniform vec3 tone_uncharted_b = vec3(0.20, 0.01, 0.30); // D, E, F
-uniform vec3 tone_uncharted_c = vec3(8.0, 2.0, 0.0); // W, ExposureBias, Unused
+uniform vec3 tone_uncharted_b = vec3(0.20, 0.01, 0.22); // D, E, F
+uniform vec3 tone_uncharted_c = vec3(11.2, 1.0, 0.0); // W, Use Luminance, Unused
+
 vec3 Uncharted2Tonemap(vec3 x)
 {
-    float ExposureBias = tone_uncharted_c.y;
-    float A = tone_uncharted_a.x * ExposureBias * ExposureBias;
-    float B = tone_uncharted_a.y * ExposureBias;
+    float A = tone_uncharted_a.x;
+    float B = tone_uncharted_a.y;
     float C = tone_uncharted_a.z;
     float D = tone_uncharted_b.x;
     float E = tone_uncharted_b.y;
     float F = tone_uncharted_b.z;
-    
+    return ((x*(A*x+C*B)+D*E)/(x*(A*x+B)+D*F))-E/F;
+}
+
+float Uncharted2Tonemap1f(float x)
+{
+    float A = tone_uncharted_a.x;
+    float B = tone_uncharted_a.y;
+    float C = tone_uncharted_a.z;
+    float D = tone_uncharted_b.x;
+    float E = tone_uncharted_b.y;
+    float F = tone_uncharted_b.z;
     return ((x*(A*x+C*B)+D*E)/(x*(A*x+B)+D*F))-E/F;
 }
 
 vec3 uncharted2(vec3 col)
 {
-    return Uncharted2Tonemap(col)/Uncharted2Tonemap(vec3(tone_uncharted_c.x));
+    float ExposureBias = 1.0;
+    vec3 curr;
+
+    if (tone_uncharted_c.y > 0.5) {
+        float lum = 0.2126 * col.r + 0.7152 * col.g + 0.0722 * col.b;
+        float newLum = Uncharted2Tonemap1f(ExposureBias * lum);
+        float lumScale = newLum / lum;
+        curr = col * vec3(lumScale);
+    } else {
+        curr = Uncharted2Tonemap(vec3(ExposureBias) * col);
+    }
+
+    vec3 whiteScale = vec3(1.0) / Uncharted2Tonemap1f(tone_uncharted_c.x);
+    return curr * whiteScale;
 }
 
 //=============================

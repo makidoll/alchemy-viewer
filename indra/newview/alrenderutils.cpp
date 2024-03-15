@@ -281,13 +281,14 @@ ALRenderUtil::ALRenderUtil()
 	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapUchimuraLinearStart")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
 	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapUchimuraLinearLength")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
 	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapUchimuraBlackLevel")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
-	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicToeStr")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
-	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicToeLen")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
-	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicShoulderStr")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
-	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicShoulderLen")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
-	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicShoulderAngle")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
-	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicGamma")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
+	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicShoulderStrength")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
+	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicLinearStrength")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
+	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicLinearAngle")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
+	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicToeStrength")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
+	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicToeNumerator")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
+	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicToeDenomenator")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
 	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicWhitePoint")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
+	mSettingConnections.push_back(gSavedSettings.getControl("AlchemyToneMapFilmicUseLuminance")->getSignal()->connect(boost::bind(&ALRenderUtil::setupTonemap, this)));
 	mSettingConnections.push_back(gSavedSettings.getControl("RenderSharpenMethod")->getSignal()->connect(boost::bind(&ALRenderUtil::setupSharpen, this)));
 	mSettingConnections.push_back(gSavedSettings.getControl("RenderSharpenDLSSharpness")->getSignal()->connect(boost::bind(&ALRenderUtil::setupSharpen, this)));
 	mSettingConnections.push_back(gSavedSettings.getControl("RenderSharpenDLSDenoise")->getSignal()->connect(boost::bind(&ALRenderUtil::setupSharpen, this)));
@@ -386,10 +387,21 @@ bool ALRenderUtil::setupTonemap()
 	}
 	case ALTonemap::TONEMAP_UNCHARTED:
 	{
-		auto uncharted_params_1 = LLVector3(gSavedSettings.getF32("AlchemyToneMapFilmicToeStr"), gSavedSettings.getF32("AlchemyToneMapFilmicToeLen"), gSavedSettings.getF32("AlchemyToneMapFilmicShoulderStr"));
-		auto uncharted_params_2 = LLVector3(gSavedSettings.getF32("AlchemyToneMapFilmicShoulderLen"), gSavedSettings.getF32("AlchemyToneMapFilmicShoulderAngle"), gSavedSettings.getF32("AlchemyToneMapFilmicGamma"));
-		auto uncharted_params_3 = LLVector3(gSavedSettings.getF32("AlchemyToneMapFilmicWhitePoint"), 2.0, 0.0);
-
+		auto uncharted_params_1 = LLVector3(
+			gSavedSettings.getF32("AlchemyToneMapFilmicShoulderStrength"),
+			gSavedSettings.getF32("AlchemyToneMapFilmicLinearStrength"),
+			gSavedSettings.getF32("AlchemyToneMapFilmicLinearAngle")
+		);
+		auto uncharted_params_2 = LLVector3(
+			gSavedSettings.getF32("AlchemyToneMapFilmicToeStrength"),
+			gSavedSettings.getF32("AlchemyToneMapFilmicToeNumerator"),
+			gSavedSettings.getF32("AlchemyToneMapFilmicToeDenomenator")
+		);
+		auto uncharted_params_3 = LLVector3(
+			gSavedSettings.getF32("AlchemyToneMapFilmicWhitePoint"),
+			gSavedSettings.getF32("AlchemyToneMapFilmicUseLuminance"),
+			0.0f
+		);
 		tone_shader->uniform3fv(tone_uncharted_a, 1, uncharted_params_1.mV);
 		tone_shader->uniform3fv(tone_uncharted_b, 1, uncharted_params_2.mV);
 		tone_shader->uniform3fv(tone_uncharted_c, 1, uncharted_params_3.mV);

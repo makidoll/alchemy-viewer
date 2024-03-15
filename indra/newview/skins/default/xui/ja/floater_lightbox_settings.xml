@@ -81,6 +81,9 @@
 			<text name="tonemapper_dynamic_text7" value="トーンマップＤ７："/>
 			<slider name="tonemapper_dynamic_slider7"/>
 			<spinner name="tonemapper_dynamic_spinner7"/>
+			<text name="tonemapper_dynamic_text8" value="トーンマップＤ８："/>
+			<slider name="tonemapper_dynamic_slider8"/>
+			<spinner name="tonemapper_dynamic_spinner8"/>
 		</panel>
 		<!--Rendering Panel-->
 		<panel label="レンダリング" name="render_settings">

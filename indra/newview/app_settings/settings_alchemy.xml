@@ -1357,29 +1357,7 @@
 			<key>Value</key>
 			<real>1.33</real>
 		</map>
-		<key>AlchemyToneMapFilmicToeStr</key>
-		<map>
-			<key>Comment</key>
-			<string>Toe Strength</string>
-			<key>Persist</key>
-			<integer>1</integer>
-			<key>Type</key>
-			<string>F32</string>
-			<key>Value</key>
-			<real>0.22</real>
-		</map>
-		<key>AlchemyToneMapFilmicToeLen</key>
-		<map>
-			<key>Comment</key>
-			<string>Toe Length</string>
-			<key>Persist</key>
-			<integer>1</integer>
-			<key>Type</key>
-			<string>F32</string>
-			<key>Value</key>
-			<real>0.30</real>
-		</map>
-		<key>AlchemyToneMapFilmicShoulderStr</key>
+		<key>AlchemyToneMapFilmicShoulderStrength</key>
 		<map>
 			<key>Comment</key>
 			<string>Shoulder Strength</string>
@@ -1390,10 +1368,32 @@
 			<key>Value</key>
 			<real>0.22</real>
 		</map>
-		<key>AlchemyToneMapFilmicShoulderLen</key>
+		<key>AlchemyToneMapFilmicLinearStrength</key>
 		<map>
 			<key>Comment</key>
-			<string>Shoulder Length</string>
+			<string>Linear Strength</string>
+			<key>Persist</key>
+			<integer>1</integer>
+			<key>Type</key>
+			<string>F32</string>
+			<key>Value</key>
+			<real>0.30</real>
+		</map>
+		<key>AlchemyToneMapFilmicLinearAngle</key>
+		<map>
+			<key>Comment</key>
+			<string>Linear Angle</string>
+			<key>Persist</key>
+			<integer>1</integer>
+			<key>Type</key>
+			<string>F32</string>
+			<key>Value</key>
+			<real>0.10</real>
+		</map>
+		<key>AlchemyToneMapFilmicToeStrength</key>
+		<map>
+			<key>Comment</key>
+			<string>Toe Strength</string>
 			<key>Persist</key>
 			<integer>1</integer>
 			<key>Type</key>
@@ -1401,10 +1401,10 @@
 			<key>Value</key>
 			<real>0.20</real>
 		</map>
-		<key>AlchemyToneMapFilmicShoulderAngle</key>
+		<key>AlchemyToneMapFilmicToeNumerator</key>
 		<map>
 			<key>Comment</key>
-			<string>Shoulder Angle</string>
+			<string>Toe Numerator</string>
 			<key>Persist</key>
 			<integer>1</integer>
 			<key>Type</key>
@@ -1412,27 +1412,38 @@
 			<key>Value</key>
 			<real>0.01</real>
 		</map>
-		<key>AlchemyToneMapFilmicGamma</key>
+		<key>AlchemyToneMapFilmicToeDenomenator</key>
 		<map>
 			<key>Comment</key>
-			<string>Curve Gamma</string>
+			<string>Toe Denomenator</string>
 			<key>Persist</key>
 			<integer>1</integer>
 			<key>Type</key>
 			<string>F32</string>
 			<key>Value</key>
-			<real>0.3</real>
+			<real>0.22</real>
 		</map>
 		<key>AlchemyToneMapFilmicWhitePoint</key>
 		<map>
 			<key>Comment</key>
-			<string>Curve White Point</string>
+			<string>White Point</string>
 			<key>Persist</key>
 			<integer>1</integer>
 			<key>Type</key>
 			<string>F32</string>
 			<key>Value</key>
-			<real>8.0</real>
+			<real>11.2</real>
+		</map>
+		<key>AlchemyToneMapFilmicUseLuminance</key>
+		<map>
+			<key>Comment</key>
+			<string>Use Luminance</string>
+			<key>Persist</key>
+			<integer>1</integer>
+			<key>Type</key>
+			<string>F32</string>
+			<key>Value</key>
+			<real>1.0</real>
 		</map>
 		<key>ResetUserColorsOnLogout</key>
 		<map>
@@ -1708,7 +1719,7 @@
 			<array>
 				<real>0.20</real>
 				<real>0.01</real>
-				<real>0.30</real>
+				<real>0.22</real>
 			</array>
 		</map>
 		<key>RenderToneMapUnchartedC</key>
@@ -1721,8 +1732,8 @@
 			<string>Vector3</string>
 			<key>Value</key>
 			<array>
-				<real>6.5</real>
-				<real>2.0</real>
+				<real>11.2</real>
+				<real>1.0</real>
 				<real>0.0</real>
 			</array>
 		</map>
